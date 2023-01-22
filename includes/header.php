@@ -14,9 +14,9 @@
         <h2>MOTILAL NEHRU NATIONAL INSTITUTE OF TECHONOLOGY ALLAHABAD</h2>
         <nav>
             <ul>
-                <li><a href="student.php">Student Login</a></li>
-                <li><a href="faculty.php">Faculty Login</a></li>
-                <li><a href="admin.php">Admin Login</a></li>
+                <li><a href="javascript:void(0)" onclick="openStudentLoginModal()">Student Login</a></li>
+                <li><a href="javascript:void(0)" onclick="openFacultyLoginModal()">Faculty Login</a></li>
+                <li><a href="javascript:void(0)" onclick="openAdminLoginModal()">Admin Login</a></li>
             </ul>
         </nav>
 
