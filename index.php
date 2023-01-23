@@ -19,10 +19,10 @@ include 'includes/header.php'?>
     <div class="modal-content">
         <span class="close" id="sclose">&times;</span>
         <h1 style="align-items:center">Student Login</h1>
-        <form action="" method="POST">
+        <form action="authenticate/login-inc.php" method="POST">
             <input type="text" name="regno" required placeholder="Registeration No.">
             <input type="password" name="password" required placeholder="Password">
-            <input class="loginbtn" onclick="display()" type="submit" name="submit" value="Login">
+            <input class="loginbtn" type="submit" name="submit" value="Login">
         </form>
     </div>
 </div>
@@ -31,7 +31,7 @@ include 'includes/header.php'?>
     <div class="modal-content">
         <span class="close" id="fclose">&times;</span>
         <h1 style="align-items:center">Faculty Login</h1>
-        <form action="faculty-login-inc.php" method="POST">
+        <form action="authenticate/login-inc.php" method="POST">
             <input type="text" name="empno" required placeholder="Employee No.">
             <input type="password" name="password" required placeholder="Password">
             <input class="loginbtn" type="submit" name="submit" value="Login">
@@ -43,7 +43,7 @@ include 'includes/header.php'?>
     <div class="modal-content">
         <span class="close" id="aclose">&times;</span>
         <h1 style="align-items:center">Admin Login</h1>
-        <form action="admin-login-inc.php" method="POST">
+        <form action="authenticate/login-inc.php" method="POST">
             <input type="text" name="admin" required placeholder="Admin Username">
             <input type="password" name="password" required placeholder="Password">
             <input class="loginbtn" type="submit" name="submit" value="Login">
@@ -52,16 +52,6 @@ include 'includes/header.php'?>
 </div>
 
 <script src="modal-script.js"></script>
-<script>
-    function display() {
-        swal({
-            title: "Error!",
-            text: "Invalid Credentials",
-            icon: "error",
-            button: "Retry!"
-            });
-        }
-</script>
 
 <?php
 include 'includes/footer.php'?>

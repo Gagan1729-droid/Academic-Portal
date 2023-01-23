@@ -135,11 +135,13 @@ footer p{
 }
 
 .loginbtn {
+    font-weight: bold;
     text-transform: uppercase;
     color: #152648;
 }
 
-.loginbtn :hover {
+.loginbtn:hover {
     background-color: #152648;
     color: white;
+    cursor: pointer;
 }
