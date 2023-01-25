@@ -21,6 +21,13 @@ include 'includes/header.php'?>
         <h1 style="align-items:center">Student Login</h1>
         <form action="authenticate/login-inc.php" method="POST">
             <input type="text" name="regno" required placeholder="Registeration No.">
+            <select name = "course">
+                <option value="btech">B.Tech</option>
+                <option value="mtech">M.Tech</option>
+                <option value="mca">MCA</option>
+                <option value="phd">PhD</option>
+                <option value="mba">MBA</option>
+            </select>
             <input type="password" name="password" required placeholder="Password">
             <input class="loginbtn" type="submit" name="submit" value="Login">
         </form>
@@ -59,7 +66,7 @@ include 'includes/header.php'?>
         tmp = params.split('=');
         if(tmp[0] == 'error'){
             displaySwal();
-        }        
+        }
     }
     function displaySwal() {
         swal({

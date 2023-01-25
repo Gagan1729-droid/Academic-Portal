@@ -11,7 +11,7 @@ if(isset($_POST['submit'])){
             header("Location: ../index.php?error=emptyfields&regno=".$regno);
             exit();
         } else {
-            $table = "student_" . $course . "_" . substr($regno, 4);
+            $table = "student_" . $course . "_" . substr($regno, 0, 4);
             $sql = "SELECT * FROM $table WHERE regno=?";
             $stmt = mysqli_stmt_init($conn);
             if(!mysqli_stmt_prepare($stmt, $sql)){
@@ -23,13 +23,14 @@ if(isset($_POST['submit'])){
                 $result = mysqli_stmt_get_result($stmt);
                 if($row = mysqli_fetch_assoc($result)){
                     $pass_check = password_verify($password, $row['password']);
-                    if($password != $row['password']){
+                    if($pass_check){
                         header("Location: ../index.php?error=wrongpass");
                         exit();
                     }
                     else {
                         session_start();
                         $_SESSION['sessionUser'] = $row['regno'];
+                        $_SESSION['course'] = $course;
                         header("Location: ../student.php?regno=".$regno);
                         exit();
                     }

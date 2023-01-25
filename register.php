@@ -19,29 +19,30 @@ echo "<script>" .
 </div>
 
 <div id="student">
-    <form action="register-inc.php" method="POST">
+    <form action="authenticate/register-inc.php" method="POST">
         <input type="text" name="name" placeholder="Name" required>
-        <input type="number" name="regno" placeholder="Reg No" required>
         <select name = "course">
-            <option value="B.Tech">B.Tech</option>
-            <option value="M.Tech">M.Tech</option>
-            <option value="MCA">MCA</option>
-            <option value="PhD">PhD</option>
-            <option value="MBA">MBA</option>
+            <option value="btech">B.Tech</option>
+            <option value="mtech">M.Tech</option>
+            <option value="mca">MCA</option>
+            <option value="phd">PhD</option>
+            <option value="mba">MBA</option>
         </select>
         <input type="password" name="password" placeholder="Password" required>
         <input type="password" name="cpassword" placeholder="Confirm Password" required>
         <input class="register" type="submit" name="submit" value="Register">
+        <input name="student" type="hidden">
     </form>
 </div>
 
 <div id="employee">
-    <form action="register-inc.php" method="POST">
+    <form action="authenticate/register-inc.php" method="POST">
         <input type="text" name="name" placeholder="Name" required>
         <input type="number" name="regno" placeholder="Emp No" required>
         <input type="password" name="password" placeholder="Password" required>
         <input type="password" name="cpassword" placeholder="Confirm Password" required>
         <input class="register" type="submit" name="submit" value="Register">
+        <input name="employee" type="hidden">
     </form>
 </div>
 

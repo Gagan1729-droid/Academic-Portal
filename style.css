@@ -96,7 +96,7 @@ footer p{
     width: 100%;
     height: 100%;
     overflow: auto;
-    background-color: rgb(0,0,0);
+    background-color: #f2f2f2;
   }
 
   .modal-content {
@@ -123,7 +123,7 @@ footer p{
     cursor: pointer;
   }
 
-  .modal-content input {
+  .modal-content input,select {
     display: block;
     margin: 20px auto;
     text-align: center;

@@ -5,7 +5,9 @@
         exit();
     }
     $regno = $_SESSION['sessionUser'];
-    $query = "SELECT * FROM student WHERE regno = " . $regno;
+    $course = $_SESSION['course'];
+    $table = "student_" . $course . "_" . substr($regno, 0, 4);
+    $query = "SELECT * FROM $table WHERE regno = " . $regno;
     $result = mysqli_query($conn, $query);
     $row = mysqli_fetch_assoc($result);
     $name = $row['name'];
@@ -25,7 +27,7 @@
 
 <link rel = "stylesheet" type="text/css" href="student-style.css">
 <div class="container">
-<h2><?php echo $row['course'] ?></h2>
+<h2><?php echo strtoupper($course)?></h2>
 <h2>Current Semester: <?php echo $row['semester'] ?></h2>
 <h2>Status: <?php if ($row['cpi'] > 4)
     echo "Pass";
