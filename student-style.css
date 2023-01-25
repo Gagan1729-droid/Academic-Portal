@@ -1,0 +1,44 @@
+.container {
+    padding: 20px;
+}
+
+.container h2 {
+    color: #000;
+}
+
+.container nav {
+    background-color: white;
+    height: 40%;
+    box-shadow: 0 0 0 0;
+    margin: 0 auto;
+}
+
+.container ul {
+    position: relative;
+    float: left;
+    left: 35%;
+}
+
+.container ul li {
+    display: block;
+    list-style: none;
+    box-shadow: 0 0 5px #000;
+    padding: 10px;
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+.container ul li a {
+    font-weight: bold;
+    text-decoration: none;
+    color: black;
+    font-size: 18px;
+    font-family: sans-serif;
+    text-align: center;
+    padding: 0px 10px 0px 10px;
+    border-right: 0;
+}
+
+.container ul li :hover {
+    color: #3DB7EF;
+}

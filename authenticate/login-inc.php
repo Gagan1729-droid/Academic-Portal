@@ -1,16 +1,18 @@
 <?php
 
 if(isset($_POST['submit'])){
-    require '../database.php';
+    require '../includes/database.php';
 
     if(isset($_POST['regno'])){
         $regno = $_POST['regno'];
         $password = $_POST['password'];
+        $course = $_POST['course'];
         if(empty($regno) || empty($password)){
             header("Location: ../index.php?error=emptyfields&regno=".$regno);
             exit();
         } else {
-            $sql = "SELECT * FROM student WHERE regno=?";
+            $table = "student_" . $course . "_" . substr($regno, 4);
+            $sql = "SELECT * FROM $table WHERE regno=?";
             $stmt = mysqli_stmt_init($conn);
             if(!mysqli_stmt_prepare($stmt, $sql)){
                 header("Location: ../index.php?error=sqlerror");
@@ -28,7 +30,7 @@ if(isset($_POST['submit'])){
                     else {
                         session_start();
                         $_SESSION['sessionUser'] = $row['regno'];
-                        header("Location: ../index.php?success=loggedin");
+                        header("Location: ../student.php?regno=".$regno);
                         exit();
                     }
                 } else {

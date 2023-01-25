@@ -1,5 +1,6 @@
 <?php 
 session_start();
+include 'database.php';
 ?>
 
 <html lang="en">
@@ -20,30 +21,16 @@ session_start();
         <h2>MOTILAL NEHRU NATIONAL INSTITUTE OF TECHONOLOGY ALLAHABAD</h2>
         <nav>
             <ul>
-                <li><a href="javascript:void(0)" onclick="openStudentLoginModal()">Student Login</a></li>
-                <li><a href="javascript:void(0)" onclick="openFacultyLoginModal()">Faculty Login</a></li>
-                <li><a href="javascript:void(0)" onclick="openAdminLoginModal()">Admin Login</a></li>
+                <li id="headertabs"><a href="javascript:void(0)" onclick="openStudentLoginModal()">Student Login</a></li>
+                <li id="headertabf"><a href="javascript:void(0)" onclick="openFacultyLoginModal()">Faculty Login</a></li>
+                <li id="headertaba"><a href="javascript:void(0)" onclick="openAdminLoginModal()">Admin Login</a></li>
+                <li id="header-register"><a href="register.php">Register</a></li>
+                
+                <li><a id="pname" style="display: none"></a></li>
+                <li><a id="logout" href="logout.php" style="display: none">Logout</a></li>
+                <li><a id="cancel" href="index.php" style="display: none">Cancel</a></li>
             </ul>
         </nav>
 
     </div>
 </header>
-
-<script>
-    window.onload = function() {
-        var url = document.location.href,
-        params = url.split('?')[1], tmp;
-        tmp = params.split('=');
-        if(tmp[0] == 'error'){
-            displaySwal();
-        }        
-    }
-    function displaySwal() {
-        swal({
-            title: "Error!",
-            text: "Invalid Credentials",
-            icon: "error",
-            button: "Retry!"
-            });
-        }
-</script>

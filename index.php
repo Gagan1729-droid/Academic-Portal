@@ -52,6 +52,24 @@ include 'includes/header.php'?>
 </div>
 
 <script src="modal-script.js"></script>
+<script>
+    window.onload = function() {
+        var url = document.location.href,
+        params = url.split('?')[1], tmp;
+        tmp = params.split('=');
+        if(tmp[0] == 'error'){
+            displaySwal();
+        }        
+    }
+    function displaySwal() {
+        swal({
+            title: "Error!",
+            text: "Invalid Credentials",
+            icon: "error",
+            button: "Retry!"
+            });
+        }
+</script>
 
 <?php
 include 'includes/footer.php'?>
