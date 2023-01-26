@@ -23,14 +23,17 @@ if(isset($_POST['submit'])){
                 $result = mysqli_stmt_get_result($stmt);
                 if($row = mysqli_fetch_assoc($result)){
                     $pass_check = password_verify($password, $row['password']);
-                    if($pass_check){
+
+                    if($pass_check == false){
                         header("Location: ../index.php?error=wrongpass");
-                        exit();
+                        exit();                    
                     }
                     else {
                         session_start();
+                        $_SESSION['loggedIn'] = true;
                         $_SESSION['sessionUser'] = $row['regno'];
                         $_SESSION['course'] = $course;
+                        $_SESSION['name'] = $row['name'];
                         header("Location: ../student.php?regno=".$regno);
                         exit();
                     }
@@ -60,14 +63,16 @@ if(isset($_POST['submit'])){
                 $result = mysqli_stmt_get_result($stmt);
                 if($row = mysqli_fetch_assoc($result)){
                     $pass_check = password_verify($password, $row['password']);
-                    if($password != $row['password']){
+                    if(!$pass_check){
                         header("Location: ../index.php?error=wrongpass");
                         exit();
                     }
                     else {
                         session_start();
+                        $_SESSION['loggedIn'] = true;
                         $_SESSION['sessionUser'] = $row['empno'];
-                        header("Location: ../index.php?success=loggedin");
+                        $_SESSION['name'] = $row['name'];
+                        header("Location: ../employee.php?empno=" . $empno);
                         exit();
                     }
                 } else {
@@ -76,38 +81,23 @@ if(isset($_POST['submit'])){
                 }
             }
         }
-    } else if(isset($_POST['username'])) {
-        $empno = $_POST['username'];
+    } else if(isset($_POST['admin'])) {
         $password = $_POST['password'];
-        if(empty($username) || empty($password)){
+        if(empty($password)){
             header("Location: ../index.php?error=emptyfields&username=".$username);
             exit();
         } else {
-            $sql = "SELECT * FROM admins WHERE username=?";
-            $stmt = mysqli_stmt_init($conn);
-            if(!mysqli_stmt_prepare($stmt, $sql)){
-                header("Location: ../index.php?error=sqlerror");
+            $pass_check = password_verify($password, "\$2y$10\$aqtiE2iE1UY7BH0qPViaFOWKBYT7MUsQV8CUIlQg/3KJCZOl1px/2");
+            if(!$pass_check){
+                header("Location: ../index.php?error=wrongpass");
                 exit();
-            } else {
-                mysqli_stmt_bind_param($stmt, "s", $username);
-                mysqli_stmt_execute($stmt);
-                $result = mysqli_stmt_get_result($stmt);
-                if($row = mysqli_fetch_assoc($result)){
-                    $pass_check = password_verify($password, $row['password']);
-                    if($password != $row['password']){
-                        header("Location: ../index.php?error=wrongpass");
-                        exit();
-                    }
-                    else {
-                        session_start();
-                        $_SESSION['sessionUser'] = $row['username'];
-                        header("Location: ../index.php?success=loggedin");
-                        exit();
-                    }
-                } else {
-                    header("Location: ../index.php?error=nouser");
-                    exit();
-                }
+            }
+            else {
+                session_start();
+                $_SESSION['loggedIn'] = true;
+                $_SESSION['name'] = 'Admin';
+                header("Location: ../admin.php");
+                exit();
             }
         }
     }

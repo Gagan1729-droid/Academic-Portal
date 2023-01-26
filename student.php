@@ -11,15 +11,15 @@
     $result = mysqli_query($conn, $query);
     $row = mysqli_fetch_assoc($result);
     $name = $row['name'];
-    echo "<script>" .
-    "    document.getElementById('headertabs').style.display = 'none';" .
-    "    document.getElementById('headertabf').style.display = 'none';" .
-    "    document.getElementById('headertaba').style.display = 'none';" .
-    "    document.getElementById('header-register').style.display = 'none';" .
-    "    document.getElementById('logout').style.display = 'inline';" .
-    "    document.getElementById('pname').style.display = 'inline';" .
-    "    document.getElementById('pname').innerHTML = '$name';" .
-    "</script>"
+    // echo "<script>" .
+    // "    document.getElementById('headertabs').style.display = 'none';" .
+    // "    document.getElementById('headertabf').style.display = 'none';" .
+    // "    document.getElementById('headertaba').style.display = 'none';" .
+    // "    document.getElementById('header-register').style.display = 'none';" .
+    // "    document.getElementById('logout').style.display = 'inline';" .
+    // "    document.getElementById('pname').style.display = 'inline';" .
+    // "    document.getElementById('pname').innerHTML = '$name';" .
+    // "</script>"
 ?>
 
 

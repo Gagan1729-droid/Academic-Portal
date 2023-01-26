@@ -38,7 +38,6 @@ echo "<script>" .
 <div id="employee">
     <form action="authenticate/register-inc.php" method="POST">
         <input type="text" name="name" placeholder="Name" required>
-        <input type="number" name="regno" placeholder="Emp No" required>
         <input type="password" name="password" placeholder="Password" required>
         <input type="password" name="cpassword" placeholder="Confirm Password" required>
         <input class="register" type="submit" name="submit" value="Register">

@@ -18,7 +18,7 @@ include 'includes/header.php'?>
 <div class="modal" id="studentLoginModal">
     <div class="modal-content">
         <span class="close" id="sclose">&times;</span>
-        <h1 style="align-items:center">Student Login</h1>
+        <h1 style="text-align:center">Student Login</h1>
         <form action="authenticate/login-inc.php" method="POST">
             <input type="text" name="regno" required placeholder="Registeration No.">
             <select name = "course">
@@ -37,7 +37,7 @@ include 'includes/header.php'?>
 <div class="modal" id="facultyLoginModal">
     <div class="modal-content">
         <span class="close" id="fclose">&times;</span>
-        <h1 style="align-items:center">Faculty Login</h1>
+        <h1 style="text-align:center">Faculty Login</h1>
         <form action="authenticate/login-inc.php" method="POST">
             <input type="text" name="empno" required placeholder="Employee No.">
             <input type="password" name="password" required placeholder="Password">
@@ -49,9 +49,9 @@ include 'includes/header.php'?>
 <div class="modal" id="adminLoginModal">
     <div class="modal-content">
         <span class="close" id="aclose">&times;</span>
-        <h1 style="align-items:center">Admin Login</h1>
+        <h1 style="text-align:center">Admin Login</h1>
         <form action="authenticate/login-inc.php" method="POST">
-            <input type="text" name="admin" required placeholder="Admin Username">
+            <input type="hidden" name="admin">
             <input type="password" name="password" required placeholder="Password">
             <input class="loginbtn" type="submit" name="submit" value="Login">
         </form>
