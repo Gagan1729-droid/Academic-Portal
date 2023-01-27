@@ -24,7 +24,7 @@
                 <button id="stop-grade-entry" onclick="stop_grade_entry()">Stop</button></li>
             <li id="headertaba"><a href="javascript:void(0)">Course Entry:</a>
                 <button id="start-course-entry" onclick="start_course_entry()">Start</button>
-                <button id="stop-course-entry" onclick="start_course_entry()">Stop</button></li>
+                <button id="stop-course-entry" onclick="stop_course_entry()">Stop</button></li>
             
         </ul>
     </nav>
@@ -71,7 +71,7 @@
         document.getElementById('stop-course-entry').style.display = 'inline';
     }
 
-    function stop_grade_entry() {
+    function stop_course_entry() {
         <?php $query = "UPDATE admin SET course_entry = 0 WHERE semester = " . $semester;
         $result = mysqli_query($conn, $query); ?>
         document.getElementById("start-course-entry").style.display = 'inline';

@@ -20,9 +20,9 @@
 <h2>Current Semester: <?php echo $row2['semester'] ?></h2>
     <nav>
         <ul>
-            <li id="headertabc"><a href="javascript:void(0)">Enter courses for current semester</a></li>
-            <li id="headertabm"><a href="javascript:void(0)">Enter marks</a></li>
-            <li id="headertabs"><a href="javascript:void(0)">See your courses for current semester</a></li>
+            <li id="headertabc"><a href="add-courses.php">Enter courses for current semester</a></li>
+            <li id="headertabm"><a href="enter-grades.php">Enter marks</a></li>
+            <li id="headertabs"><a href="courses.php">See your courses for current semester</a></li>
             
         </ul>
     </nav>
