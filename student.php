@@ -37,7 +37,7 @@ else
         <ul>
             <li id="headertabs"><a href="javascript:void(0)">Get Transcript</a></li>
             <li id="headertabf"><a href="javascript:void(0)">Previous semester performance</a></li>
-            <li id="headertaba"><a href="javascript:void(0)">See courses for current semester</a></li>
+            <li id="headertaba"><a href="get-courses.php">See courses for current semester</a></li>
             
         </ul>
     </nav>

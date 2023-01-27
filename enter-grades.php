@@ -8,7 +8,9 @@
         <tr>
             <td>Reg. no</td>
             <td id="tdname">Name</td>
-            <td>Marks</td>
+            <td>Mid sem Marks</td>
+            <td>End sem Marks</td>
+            <td>TA marks</td>
         </tr>
     </table>
     <button onclick="save_marks('btech')">Save</button>
@@ -83,18 +85,29 @@
 
 <script>
     function save_marks(course){
-        var marks = [];
-        var classname = "marks_" + course;
+        var midmarks = [], endmarks = [], tamarks = [];
+        var classname = "marks_" + course+"_mid";
         var arr = document.getElementsByClassName(classname);
         for(var i=0; i< arr.length; i++){
-            marks.push(arr[i].value);
+            midmarks.push(arr[i].value);
         }
-        console.log(marks);
+        var classname = "marks_" + course+"_end";
+        var arr = document.getElementsByClassName(classname);
+        for(var i=0; i< arr.length; i++){
+            endmarks.push(arr[i].value);
+        }
+        var classname = "marks_" + course+"_ta";
+        var arr = document.getElementsByClassName(classname);
+        for(var i=0; i< arr.length; i++){
+            tamarks.push(arr[i].value);
+        }
         $.ajax({
         type: "POST",
         url: "includes/add-grades-ajax.php",
         data: {
-        marks: marks,
+        midmarks: midmarks,
+        endmarks: endmarks,
+        tamarks: tamarks,
         course: course
         },
         cache: false,
@@ -116,10 +129,23 @@ $result = mysqli_query($conn, $query);
 while($row = mysqli_fetch_assoc($result)){
     $regno = $row['regno'];
     $name = $row['name'];
+    $mark = $row['1_1_marks'];
+    $arr = preg_split('/\,/', $mark);
+    $mid = '';
+    $end = '';
+    $ta = '';
+    if (sizeof($arr)==3) {
+        $mid = $arr[0];
+        $end = $arr[1];
+        $ta = $arr[2];
+    }
+
     echo "<script>" .
         "document.getElementById('btech').innerHTML += '<tr><td>$regno</td>" .
         "<td>$name</td>" .
-        "<td><input type=\"number\" class=\"marks_btech\"></td></tr>'" .
+        "<td><input type=\"number\" class=\"marks_btech_mid\" value=\"$mid\"></td>" .
+        "<td><input type=\"number\" class=\"marks_btech_end\" value=\"$end\"></td>" .
+        "<td><input type=\"number\" class=\"marks_btech_ta\" value=\"$ta\"></td></tr>'" .
         "</script>";
 }
 

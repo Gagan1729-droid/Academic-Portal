@@ -33,13 +33,13 @@ if ($row['courses'] != NULL) {
     while ($i < strlen($courses)) {
         $temp = $courses[$i - 1];
         echo "<script>" .
-            "document.getElementbyId('course_table').innerHTML += <tr><td>$i</td><td>$temp</td></tr>" .
+            "document.getElementById('course_table').innerHTML += <tr><td>$i</td><td>$temp</td></tr>" .
             "</script>";
     }
 }
 else {
     echo "<script>" .
-            "document.getElementbyId('course_table').innerHTML += '<tr><td>No courses added</td></tr>'" .
+            "document.getElementById('course_table').innerHTML += '<tr><td>No courses added</td></tr>'" .
             "</script>";
 }
 
