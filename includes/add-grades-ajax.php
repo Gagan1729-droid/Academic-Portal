@@ -2,12 +2,15 @@
 include 'database.php';
 session_start();
 
-$course = $_POST['course'];
+$program_course = $_POST['program_course'];
 $midmarks = $_POST['midmarks'];
 $endmarks = $_POST['endmarks'];
 $tamarks = $_POST['tamarks'];
+$arr = preg_split('/\_/', $program_course);
+$program = $arr[0];
+$course = $arr[1];
 
-$table = "student_" . $course . "_2020";
+$table = "student_" . $program . "_2020";
 $query = "SELECT * FROM $table";
 $result = mysqli_query($conn, $query);
 
@@ -19,11 +22,12 @@ for ($i=0; $i<sizeof($endmarks); $i++){
     if($m){
         $grade = getGrade($m);
         $regno = $row['regno'];
-        $query = "UPDATE $table SET 1_14_marks = '$marks', 1_14_grades = '$grade' WHERE regno = $regno";
+        $sem = $row['semester'];
+        $query = "UPDATE $table SET $sem"."_".$course."_marks = '$marks', $sem"."_".$course."_grades = '$grade' WHERE regno = $regno";
         mysqli_query($conn, $query);
     } else {
         $regno = $row['regno'];
-        $query = "UPDATE $table SET 1_14_marks = NULL, 1_14_grades = NULL WHERE regno = $regno";
+        $query = "UPDATE $table SET $sem"."_".$course."_marks = NULL, $sem"."_".$course."_grades = NULL WHERE regno = $regno";
         mysqli_query($conn, $query);
     }
 }

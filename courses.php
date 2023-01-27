@@ -28,7 +28,7 @@ $query = "SELECT * FROM $table WHERE empno = " . $empno;
 $result = mysqli_query($conn, $query);
 $row = mysqli_fetch_assoc($result);
 $semester = $row['semester'];
-if ($row['courses'] != NULL) {
+if ($row['courses_$semester'] != NULL) {
     $courses = preg_split('/\,/', $row['courses_$semester']);
     $i = 1;
     while ($i < sizeof($courses)) {
