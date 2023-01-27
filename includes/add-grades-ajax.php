@@ -19,15 +19,15 @@ for ($i=0; $i<sizeof($endmarks); $i++){
     $x = floatval($midmarks[$i]);
     $m = floatval($midmarks[$i]) + floatval($endmarks[$i]) + floatval($tamarks[$i]);
     $marks = $midmarks[$i] . "," . $endmarks[$i] . "," . $tamarks[$i];
+    $regno = $row['regno'];
+    $sem = $row['semester'];
     if($m){
         $grade = getGrade($m);
-        $regno = $row['regno'];
-        $sem = $row['semester'];
-        $query = "UPDATE $table SET $sem"."_".$course."_marks = '$marks', $sem"."_".$course."_grades = '$grade' WHERE regno = $regno";
+        $query = "UPDATE $table SET ".$sem."_".$course."_marks = '$marks',". $sem."_".$course."_grades = '$grade' WHERE regno = $regno";
         mysqli_query($conn, $query);
     } else {
         $regno = $row['regno'];
-        $query = "UPDATE $table SET $sem"."_".$course."_marks = NULL, $sem"."_".$course."_grades = NULL WHERE regno = $regno";
+        $query = "UPDATE $table SET ".$sem."_".$course."_marks = NULL, ".$sem."_".$course."_grades = NULL WHERE regno = $regno";
         mysqli_query($conn, $query);
     }
 }

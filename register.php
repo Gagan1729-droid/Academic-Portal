@@ -21,7 +21,7 @@ echo "<script>" .
 <div id="student">
     <form action="authenticate/register-inc.php" method="POST">
         <input type="text" name="name" placeholder="Name" required>
-        <select name = "course">
+        <select name = "program">
             <option value="btech">B.Tech</option>
             <option value="mtech">M.Tech</option>
             <option value="mca">MCA</option>

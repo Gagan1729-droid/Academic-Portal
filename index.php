@@ -21,7 +21,7 @@ include 'includes/header.php'?>
         <h1 style="text-align:center">Student Login</h1>
         <form action="authenticate/login-inc.php" method="POST">
             <input type="text" name="regno" required placeholder="Registeration No.">
-            <select name = "course">
+            <select name = "program">
                 <option value="btech">B.Tech</option>
                 <option value="mtech">M.Tech</option>
                 <option value="mca">MCA</option>

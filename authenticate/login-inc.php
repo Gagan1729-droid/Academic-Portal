@@ -6,12 +6,12 @@ if(isset($_POST['submit'])){
     if(isset($_POST['regno'])){
         $regno = $_POST['regno'];
         $password = $_POST['password'];
-        $course = $_POST['course'];
+        $program = $_POST['program'];
         if(empty($regno) || empty($password)){
             header("Location: ../index.php?error=emptyfields&regno=".$regno);
             exit();
         } else {
-            $table = "student_" . $course . "_" . substr($regno, 0, 4);
+            $table = "student_" . $program . "_" . substr($regno, 0, 4);
             $sql = "SELECT * FROM $table WHERE regno=?";
             $stmt = mysqli_stmt_init($conn);
             if(!mysqli_stmt_prepare($stmt, $sql)){
@@ -32,7 +32,7 @@ if(isset($_POST['submit'])){
                         session_start();
                         $_SESSION['loggedIn'] = true;
                         $_SESSION['sessionUser'] = $row['regno'];
-                        $_SESSION['course'] = $course;
+                        $_SESSION['course'] = $program;
                         $_SESSION['name'] = $row['name'];
                         header("Location: ../student.php?regno=".$regno);
                         exit();

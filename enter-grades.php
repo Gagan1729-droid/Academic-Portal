@@ -12,7 +12,8 @@ if ($row['courses_'.$sem] != NULL) {
     $i = 1;
     while ($i < sizeof($courses)) {
         $temp = $courses[$i - 1];
-        $temp = mysqli_fetch_assoc(mysqli_query($conn, "SELECT id FROM courses WHERE course = '$temp'"))['id'];
+        $x = mysqli_fetch_assoc(mysqli_query($conn, "SELECT * FROM courses WHERE course = '$temp'"));
+        $temp = $x['id'];
         echo "" .
             "<script>" .
             "document.getElementsByTagName('body')[0].innerHTML +=' " .
@@ -22,9 +23,9 @@ if ($row['courses_'.$sem] != NULL) {
             "    <legend>B.Tech</legend>" .
             "    <table id=\"btech_$temp\">" .
             "        <tr>" .
-            "            <td>Reg. no</td>" .
+            "            <td>Reg no</td>" .
             "            <td>Name</td>" .
-            "            <td>Mid sem Marks</td>" .
+            "            <td class=\"mid\">Mid sem Marks</td>" .
             "            <td>End sem Marks</td>" .
             "            <td>TA marks</td>" .
             "        </tr>" .
@@ -35,9 +36,9 @@ if ($row['courses_'.$sem] != NULL) {
             "        <legend>M.Tech</legend>" .
             "        <table id=\"mtech_$temp\"> " .
             "            <tr> " .
-            "                <td>Reg. no</td>" .
+            "                <td>Reg no</td>" .
             "                <td>Name</td>" .
-            "                <td>Mid sem Marks</td>" .
+            "                <td class=\"mid\">Mid sem Marks</td>" .
             "                <td>End sem Marks</td>" .
             "                <td>TA marks</td>" .
             "            </tr>" .
@@ -66,7 +67,12 @@ if ($row['courses_'.$sem] != NULL) {
         text-align: center;
     }
     input {
-        width: 50px;
+        text-align: center;
+        width: 120px;
+        border:0;
+    }
+    input:focus {
+        outline: none;
     }
     button {
         padding: 5px;
@@ -116,34 +122,36 @@ if ($row['courses_'.$sem] != NULL) {
 
 
 <?php
-
-$query = "SELECT * FROM student_btech_2020";
-$result = mysqli_query($conn, $query);
-while($row = mysqli_fetch_assoc($result)){
-    $regno = $row['regno'];
-    $name = $row['name'];
-    $i = 1;
-    while ($i < sizeof($courses)) {
-        $temp = mysqli_fetch_assoc(mysqli_query($conn,"SELECT id FROM courses WHERE course = '" . $courses[$i-1]."'"))['id'];
-        $col = $sem . "_" . $temp . "_marks";
-        $arr = preg_split('/\,/', $row[$col]);
-        $mid = '';
-        $end = '';
-        $ta = '';
-        if (sizeof($arr)==3) {
-            $mid = $arr[0];
-            $end = $arr[1];
-            $ta = $arr[2];
+$programs = ['btech', 'mtech'];
+foreach ($programs as $p) {
+    $query = "SELECT * FROM student_".$p."_2020";
+    $result = mysqli_query($conn, $query);
+    while ($row = mysqli_fetch_assoc($result)) {
+        $regno = $row['regno'];
+        $name = $row['name'];
+        $i = 1;
+        while ($i < sizeof($courses)) {
+            $temp = mysqli_fetch_assoc(mysqli_query($conn, "SELECT id FROM courses WHERE course = '" . $courses[$i - 1] . "'"))['id'];
+            $col = $sem . "_" . $temp . "_marks";
+            $arr = preg_split('/\,/', $row[$col]);
+            $mid = '';
+            $end = '';
+            $ta = '';
+            if (sizeof($arr) == 3) {
+                $mid = $arr[0];
+                $end = $arr[1];
+                $ta = $arr[2];
+            }
+            echo "<script>" .
+                "document.getElementById('".$p."_$temp').innerHTML += '<tr><td>$regno</td>" .
+                "<td>$name</td>" .
+                "<td><input type=\"number\" class=\"marks_".$p."_" . $temp . "_mid\" value=\"$mid\"></td>" .
+                "<td><input type=\"number\" class=\"marks_".$p."_" . $temp . "_end\" value=\"$end\"></td>" .
+                "<td><input type=\"number\" class=\"marks_".$p."_" . $temp . "_ta\" value=\"$ta\"></td></tr>'" .
+                "</script>";
+            $i++;
         }
-        echo "<script>" .
-        "document.getElementById('btech_$temp').innerHTML += '<tr><td>$regno</td>" .
-        "<td>$name</td>" .
-        "<td><input type=\"number\" class=\"marks_btech_".$temp."_mid\" value=\"$mid\"></td>" .
-        "<td><input type=\"number\" class=\"marks_btech_".$temp."_end\" value=\"$end\"></td>" .
-        "<td><input type=\"number\" class=\"marks_btech_".$temp."_ta\" value=\"$ta\"></td></tr>'" .
-        "</script>";
-        $i++;
-    }       
+    }
 }
 
 include 'includes/footer.php' ?>

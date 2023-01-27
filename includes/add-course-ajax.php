@@ -22,20 +22,23 @@ if($courses != NULL){
 
 $id = mysqli_fetch_assoc(mysqli_query($conn, "SELECT id from courses WHERE course = '" . $course ."'"))['id'];
 
+$programs = ['btech', 'mtech', 'mca'];
 // Add the columns for marks and grades in students
-$table = "student_btech_2020";
-$col = $semester . "_" . $id . "_marks";
-mysqli_query($conn,"ALTER TABLE $table ADD $col VARCHAR(15)");
+foreach ($programs as $p) {
+    $table = "student_".$p."_2020";
+    $col = $semester . "_" . $id . "_marks";
+    mysqli_query($conn, "ALTER TABLE $table ADD $col VARCHAR(15)");
 
-$col = $semester . "_" . $id . "_grades";
-mysqli_query($conn,"ALTER TABLE $table ADD $col VARCHAR(3)");
+    $col = $semester . "_" . $id . "_grades";
+    mysqli_query($conn, "ALTER TABLE $table ADD $col VARCHAR(3)");
 
-// Update courses of all the students
-$result = mysqli_query($conn, "SELECT * FROM $table");
-if($row=mysqli_fetch_assoc($result)){
-    $courses = $row['courses_' . $semester];
-    $courses .= $id . ",";
-    mysqli_query($conn, "UPDATE $table SET courses_$semester = '$courses' WHERE 1");
+    // Update courses of all the students
+    $result = mysqli_query($conn, "SELECT * FROM $table");
+    if ($row = mysqli_fetch_assoc($result)) {
+        $courses = $row['courses_' . $semester];
+        $courses .= $id . ",";
+        mysqli_query($conn, "UPDATE $table SET courses_$semester = '$courses' WHERE 1");
+    }
 }
 
 echo "Saved";
