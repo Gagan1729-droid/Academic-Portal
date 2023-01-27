@@ -27,14 +27,16 @@ $table = "employee";
 $query = "SELECT * FROM $table WHERE empno = " . $empno;
 $result = mysqli_query($conn, $query);
 $row = mysqli_fetch_assoc($result);
+$semester = $row['semester'];
 if ($row['courses'] != NULL) {
-    $courses = str_split(',', $row['courses']);
+    $courses = preg_split('/\,/', $row['courses_$semester']);
     $i = 1;
-    while ($i < strlen($courses)) {
+    while ($i < sizeof($courses)) {
         $temp = $courses[$i - 1];
         echo "<script>" .
-            "document.getElementById('course_table').innerHTML += <tr><td>$i</td><td>$temp</td></tr>" .
+            "document.getElementById('course_table').innerHTML += '<tr><td>$i)</td><td>$temp</td></tr>'" .
             "</script>";
+        $i++;
     }
 }
 else {

@@ -19,11 +19,11 @@ for ($i=0; $i<sizeof($endmarks); $i++){
     if($m){
         $grade = getGrade($m);
         $regno = $row['regno'];
-        $query = "UPDATE $table SET 1_1_marks = '$marks', 1_1_grades = '$grade' WHERE regno = $regno";
+        $query = "UPDATE $table SET 1_14_marks = '$marks', 1_14_grades = '$grade' WHERE regno = $regno";
         mysqli_query($conn, $query);
     } else {
         $regno = $row['regno'];
-        $query = "UPDATE $table SET 1_1_marks = NULL, 1_1_grades = NULL WHERE regno = $regno";
+        $query = "UPDATE $table SET 1_14_marks = NULL, 1_14_grades = NULL WHERE regno = $regno";
         mysqli_query($conn, $query);
     }
 }
