@@ -20,6 +20,13 @@ if($courses != NULL){
     $result = mysqli_query($conn, $query);
 }
 
+// Update credits in admin table
+$result = mysqli_query($conn, "SELECT * FROM admin WHERE semester = $semester");
+$row = mysqli_fetch_assoc($result);
+$totcred = intval($row['credits']) + $credits;
+mysqli_query($conn, "UPDATE admin SET credits = $totcred WHERE semester = $semester");
+
+
 $id = mysqli_fetch_assoc(mysqli_query($conn, "SELECT id from courses WHERE course = '" . $course ."'"))['id'];
 
 $programs = ['btech', 'mtech', 'mca'];

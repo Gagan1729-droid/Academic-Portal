@@ -54,9 +54,7 @@
     document.getElementById("changeSemInput").value = <?php echo $semester; ?>;
 
     function change_semester() {
-        // <php $sem = "2";
-        // $query = "INSERT INTO admin(`semester`, `grade_entry`, `course_entry`) VALUES ('$sem', '0', '0')";
-        // $result = mysqli_query($conn, $query); ?>
+        post('semester', document.getElementById("changeSemInput").value);
     }
 
     function start_grade_entry() {
