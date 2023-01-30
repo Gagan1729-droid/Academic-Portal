@@ -34,7 +34,7 @@ else
     <nav>
         <ul>
             <li id="headertabs"><a href="transcript.php">Get Transcript</a></li>
-            <li id="headertabf"><a href="javascript:void(0)">Previous semester performance</a></li>
+            <li id="headertabf"><a href="previous-semester.php">Previous semester performance</a></li>
             <li id="headertaba"><a href="get-courses.php">See courses for current semester</a></li>
             
         </ul>
