@@ -30,7 +30,8 @@ for ($i=0; $i<sizeof($endmarks); $i++){
         exit();
     }
     $m = $mid + $end + $ta;
-    $marks = strval($mid) . "," . $endmarks[$i] . "," . $tamarks[$i];
+    $marks = ($result['type'] == "theory") ? $midmarks[$i] : ''; 
+    $marks = "," . $endmarks[$i] . "," . $tamarks[$i];
     $reg = $regno[$i];
     $row = mysqli_fetch_assoc(mysqli_query($conn, "SELECT * FROM $table WHERE regno = $reg"));
     $json = json_decode($row["marks_$sem"], true);

@@ -29,6 +29,7 @@
             <li id="headertabd"><a href="javascript:void(0)">Display results for current semester:</a>
                 <button id="start-display-results" onclick="start_display_results()">Start</button>
                 <button id="stop-display-results" onclick="stop_display_results()">Stop</button></li>
+            <li id="headertabl"><a href="professors-not-entered-marks.php">Professors who haven't yet entered marks</a>
             
         </ul>
     </nav>

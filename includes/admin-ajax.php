@@ -91,18 +91,7 @@ function calcresults($conn, $semester){
                 $totcredits += $credits;
                 $gradecredits += ($spi * $credits);
                 $i++;
-            }            
-            // $i = 1;
-            // $gradecredits = $spi * $credits;
-            // $totcredits = $credits;
-            // while($i < $semester){
-            //     $row2 = mysqli_fetch_assoc($res1);
-            //     $c = $row2['credits'];
-            //     $spi = $row['spi_' . $i];
-            //     $totcredits += $c;
-            //     $gradecredits += ($spi * $c);
-            //     $i++;
-            // }
+            } 
             $cpi = $gradecredits / $totcredits;
             $cpi = number_format($cpi, 2);
             $table = "academics_" . $p . "_2020";
