@@ -28,6 +28,16 @@ echo "<script>" .
             <option value="phd">PhD</option>
             <option value="mba">MBA</option>
         </select>
+        <select name = "branch">
+            <option value="cse">Computer Science and Engineering</option>
+            <option value="ece">Electronic and Communication Engineering</option>
+            <option value="ee">Electrical Engineering</option>
+            <option value="me">Mechanical Engineering</option>
+            <option value="ce">Civil Engineering</option>
+            <option value="che">Chemical Engineering</option>
+            <option value="be">Biotechonology Engineering</option>
+            <option value="pie">Production and Industrial Engineering</option>
+        </select>
         <input type="password" name="password" placeholder="Password" required>
         <input type="password" name="cpassword" placeholder="Confirm Password" required>
         <input class="register" type="submit" name="submit" value="Register">

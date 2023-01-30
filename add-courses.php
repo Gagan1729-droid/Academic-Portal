@@ -14,10 +14,21 @@ $semester = $row['semester'];?>
     <option value="theory">Theory</option>   
     <option value="practical">Practical</option>
 </select>
+<select id='branch'>
+    <option value="cse">Computer Science and Engineering</option>
+    <option value="ece">Electronic and Communication Engineering</option>
+    <option value="ee">Electrical Engineering</option>
+    <option value="me">Mechanical Engineering</option>
+    <option value="ce">Civil Engineering</option>
+    <option value="che">Chemical Engineering</option>
+    <option value="be">Biotechonology Engineering</option>
+    <option value="pie">Production and Industrial Engineering</option>
+</select>
 <input id='midsem' type='number' placeholder = "Max Mid Sem Marks">
 <input id='endsem' type="number" placeholder = "Max End Sem Marks">
 <input id='ta' type="number" placeholder = "Max TA marks">
 <input id='credits' type="number" placeholder = "Credits">
+
 <button onclick="addcourse()" style="text-align: center">Add</button>
 </div>
 
@@ -27,6 +38,7 @@ $semester = $row['semester'];?>
     <tr>
         <td>Sr no</td>
         <td>Course</td>
+        <td>Branch</td>
         <td>Type</td>
         <td>Max Mid Sem Marks</td>
         <td>Max End Sem Marks</td>
@@ -44,11 +56,11 @@ $semester = $row['semester'];?>
             document.getElementById('midsem').style.display = 'inline';
         }
     }
-    var courses='';
     var index = 0;
     function addcourse() {
         var course = document.getElementById('course').value;
         var credits = document.getElementById('credits').value;
+        var branch = document.getElementById('branch').value;
         if(course==''){
             alert("Course name cannot be empty");
             return;
@@ -76,33 +88,24 @@ $semester = $row['semester'];?>
             ta = parseInt(document.getElementById('ta').value);
             if(isNaN(end)) end=0;
             if(isNaN(ta)) ta=0;
-            console.log(mid);
             if(end+ta != 100){
                 alert("Total should be 100");
                 return;
             }
         }
-        document.getElementById('course_table').innerHTML += '<tr><td>' + ++index + '</td><td>'+course+'</td><td>'
-            +type.value+"</td><td>"+mid+"</td><td>"+end+"</td><td>"+ta+"</td><td>"+credits+"</td></tr>";
-        document.getElementById('course').value = '';
-        document.getElementById('endsem').value = '';
-        document.getElementById('midsem').value = '';
-        document.getElementById('ta').value = '';
-        document.getElementById('credits').value = '';
-        courses += course + ',';
-
+        
         $.ajax({
         type: "POST",
         url: "includes/add-course-ajax.php",
         data: {
-        courses: courses,
         course: course,
         type: type.value,
+        branch: branch,
         mid: (mid) ? mid : 0,
         end: end,
         ta: ta,
         credits: credits,
-        semester: <?php echo $semester?>      
+        semester: <?php echo $semester?>
         },
         cache: false,
         success: function(data) {
@@ -112,6 +115,14 @@ $semester = $row['semester'];?>
         console.error(xhr);
         }
         });
+
+        document.getElementById('course_table').innerHTML += '<tr><td>' + ++index + '</td><td>'+course+'</td><td>'
+            +branch+"</td><td>"+type.value+"</td><td>"+mid+"</td><td>"+end+"</td><td>"+ta+"</td><td>"+credits+"</td></tr>";
+        document.getElementById('course').value = '';
+        document.getElementById('endsem').value = '';
+        document.getElementById('midsem').value = '';
+        document.getElementById('ta').value = '';
+        document.getElementById('credits').value = '';
     }
 </script>
 
@@ -152,17 +163,15 @@ $semester = $row['semester'];?>
 
 
 <?php 
-
 if ($row['courses_'.$semester] != NULL) {
-    $courses = $row['courses_'.$semester];
-    if($courses)
-        echo "<script>var courses = '$courses'</script>";
     $courses = preg_split("/\,/", $row['courses_'.$semester]);
     $i = 1;
     while ($courses[$i-1] != NULL && $i <= sizeof($courses)) {
-        $temp = $courses[$i - 1];
-        $result = mysqli_query($conn, "SELECT * FROM courses WHERE course = '" . $temp . "'");
+        $temp = intval($courses[$i - 1]);
+        $result = mysqli_query($conn, "SELECT * FROM courses WHERE id = $temp");
         $row2 = mysqli_fetch_assoc($result);
+        $course = $row2['course'];
+        $branch = $row2['branch'];
         $type = $row2['type'];
         $mid = $row2['midsem'];
         $end = $row2['endsem'];
@@ -170,7 +179,7 @@ if ($row['courses_'.$semester] != NULL) {
         $credits = $row2['credits'];
         echo "<script>" .
             "var index = $i; " .
-            "document.getElementById('course_table').innerHTML += '<tr><td>$i</td><td>$temp</td><td>$type</td><td>$mid</td>" .
+            "document.getElementById('course_table').innerHTML += '<tr><td>$i</td><td>$course</td><td>$branch</td><td>$type</td><td>$mid</td>" .
             "<td>$end</td><td>$ta</td><td>$credits</td></tr>';" .
             "</script>";
         $i++;

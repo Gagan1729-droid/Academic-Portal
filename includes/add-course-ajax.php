@@ -3,50 +3,50 @@ include 'database.php';
 session_start();
 $table = 'employee';
 $empno = $_SESSION['sessionUser'];
-$courses = $_POST['courses'];
 $course = $_POST['course'];
 $type = $_POST['type'];
+$branch = $_POST['branch'];
 $mid = $_POST['mid'];
 $end = $_POST['end'];
 $ta = $_POST['ta'];
 $credits = $_POST['credits'];
 $semester = $_POST['semester'];
 
-$query = "INSERT INTO courses(`course`,`type`,`midsem`, `endsem`,`ta`, `credits`) VALUES('$course', '$type', '$mid','$end','$ta', '$credits')";
+// Insert the new course in courses table
+$query = "INSERT INTO courses(`course`,`branch`,`type`,`midsem`, `endsem`,`ta`, `credits`) VALUES('$course','$branch', '$type', '$mid','$end','$ta', '$credits')";
 $result = mysqli_query($conn, $query);
 
-if($courses != NULL){
-    $query = "UPDATE $table SET courses_$semester = '$courses' WHERE empno = '$empno'";
-    $result = mysqli_query($conn, $query);
-}
+// Get the id generated for the new course inserted 
+$id = mysqli_insert_id($conn);
 
-// Update credits in admin table
-$result = mysqli_query($conn, "SELECT * FROM admin WHERE semester = $semester");
-$row = mysqli_fetch_assoc($result);
-$totcred = intval($row['credits']) + $credits;
-mysqli_query($conn, "UPDATE admin SET credits = $totcred WHERE semester = $semester");
+// Update the courses for the faculty
+$courses = mysqli_fetch_assoc(mysqli_query($conn, "SELECT courses_".$semester." FROM employee WHERE empno = '$empno'"))["courses_$semester"];
+$courses .= $id . ",";
+mysqli_query($conn, "UPDATE $table SET courses_$semester = '$courses' WHERE empno = '$empno'");
 
-
-$id = mysqli_fetch_assoc(mysqli_query($conn, "SELECT id from courses WHERE course = '" . $course ."'"))['id'];
-
+// Add the columns for marks in students academics table
 $programs = ['btech', 'mtech', 'mca'];
-// Add the columns for marks and grades in students
 foreach ($programs as $p) {
-    $table = "student_".$p."_2020";
-    $col = $semester . "_" . $id . "_marks";
-    mysqli_query($conn, "ALTER TABLE $table ADD $col VARCHAR(15)");
+    $table1 = "academics_".$p."_2020";
+    $table2 = "student_".$p."_2020";
+    $row = mysqli_fetch_assoc(mysqli_query($conn, "SELECT * FROM $table1 INNER JOIN $table2 ON $table1.regno = $table2.regno AND $table2.branch = '$branch'"));
+    if ($row) {
+        $marks = json_decode($row['marks_' . $semester], true);
+        $marks[$id] = null;
+        $marks = json_encode($marks);
+        $query = "UPDATE $table1 SET marks_$semester = '$marks' WHERE regno IN (SELECT t.regno FROM $table2 t WHERE t.branch = '$branch')";
+        mysqli_query($conn, $query);
+    } 
 
-    $col = $semester . "_" . $id . "_grades";
-    mysqli_query($conn, "ALTER TABLE $table ADD $col VARCHAR(3)");
-
-    // Update courses of all the students
-    $result = mysqli_query($conn, "SELECT * FROM $table");
-    if ($row = mysqli_fetch_assoc($result)) {
-        $courses = $row['courses_' . $semester];
-        $courses .= $id . ",";
-        mysqli_query($conn, "UPDATE $table SET courses_$semester = '$courses' WHERE 1");
-    }
+    // $col = $semester . "_" . $id . "_marks";
+    // $row = mysqli_query($conn, "ALTER TABLE $table ADD $col VARCHAR(15)");    
 }
+
+// Update the courses in respective branch in admin table
+$courses = mysqli_fetch_assoc(mysqli_query($conn, "SELECT courses_$branch FROM admin WHERE semester = $semester"))["courses_$branch"];
+$courses .= $id . ",";
+$query = "UPDATE admin SET courses_$branch = '$courses' WHERE semester = $semester";
+mysqli_query($conn, $query);
 
 echo "Saved";
 ?>
