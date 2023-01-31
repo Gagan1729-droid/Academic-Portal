@@ -34,6 +34,7 @@ if(isset($_POST['submit'])){
                         $_SESSION['sessionUser'] = $row['regno'];
                         $_SESSION['program'] = $program;
                         $_SESSION['name'] = $row['name'];
+                        $_SESSION['category'] = "Student";
                         header("Location: ../student.php?regno=".$regno);
                         exit();
                     }
@@ -72,6 +73,7 @@ if(isset($_POST['submit'])){
                         $_SESSION['loggedIn'] = true;
                         $_SESSION['sessionUser'] = $row['empno'];
                         $_SESSION['name'] = $row['name'];
+                        $_SESSION['category'] = "Employee";
                         header("Location: ../employee.php?empno=" . $empno);
                         exit();
                     }
@@ -96,6 +98,7 @@ if(isset($_POST['submit'])){
                 session_start();
                 $_SESSION['loggedIn'] = true;
                 $_SESSION['name'] = 'Admin';
+                $_SESSION['category'] = "Admin";
                 header("Location: ../admin.php");
                 exit();
             }

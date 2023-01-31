@@ -35,6 +35,8 @@ function calcresults($conn, $semester){
     foreach ($programs as $p) {
         $table = "academics_" . $p . "_2020";
         mysqli_query($conn, "ALTER TABLE $table ADD spi_$semester FLOAT");
+        mysqli_query($conn, "ALTER TABLE $table ADD cpi_$semester FLOAT");
+        mysqli_query($conn, "ALTER TABLE $table ADD supplementary_$semester VARCHAR(50)");
         $query = "SELECT * FROM $table";
         $results = mysqli_query($conn, $query);
         while($row = mysqli_fetch_assoc($results)){
@@ -42,14 +44,18 @@ function calcresults($conn, $semester){
             $json = json_decode($row["marks_$semester"], true);
             $credits = 0;
             $gradecredits = 0;
+            $supply = '';
             foreach($json as $key=>$mark){
                 $grade = getGrade($mark);
-                echo $grade . " ,";
+                if ($grade == 'E')
+                    $supply .= $key . ",";                
                 $cr = intval(mysqli_fetch_assoc(mysqli_query($conn, "SELECT * FROM courses WHERE id = " . intval($key))));
                 $gradecredits += $cr * getGradePoints($grade);
                 $credits += $cr;
             }
-            echo "<br>" . $credits . "," . $gradecredits;
+
+            // Update the supplementary subject 
+            mysqli_query($conn, "UPDATE $table SET supplementary_$semester = '$supply' WHERE regno = $regno");
 
             // $courses = preg_split('/\,/', $row['courses_' . $semester]);
             // $regno = $row['regno'];
@@ -95,7 +101,7 @@ function calcresults($conn, $semester){
             $cpi = $gradecredits / $totcredits;
             $cpi = number_format($cpi, 2);
             $table = "academics_" . $p . "_2020";
-            mysqli_query($conn, "UPDATE $table SET cpi = $cpi WHERE regno = $regno");
+            mysqli_query($conn, "UPDATE $table SET cpi_$semester = $cpi WHERE regno = $regno");
         }
     }
 }

@@ -95,6 +95,7 @@ if ($row['courses_'.$sem] != NULL) {
         margin: 20px;
         width: auto;
         display: inline;
+        vertical-align: top;
     }
     h4 {
         text-align: center;

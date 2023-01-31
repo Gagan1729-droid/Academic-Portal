@@ -52,7 +52,7 @@ $details = mysqli_fetch_assoc(mysqli_query($conn, $query));
 $branch = $details['branch'];
 
 if($flag == 1){
-    $cpi = $details['cpi'];
+    $cpi = $details['cpi_'.$semester];
     $status = ($cpi > 4) ? "Passed" : "Fail";
     echo "<script>" .
         "document.getElementsByTagName('body')[0].innerHTML += '<br><h1>CPI: $cpi (From 1 to $semester semester)</h1>" .

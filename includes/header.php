@@ -47,5 +47,23 @@ if (isset($_SESSION['loggedIn'])) {
         "    document.getElementById('pname').style.display = 'inline';" .
         "    document.getElementById('pname').innerHTML = '$name';" .
         "</script>";
+
+        switch($_SESSION['category']){
+        case "Student":
+            echo "<script>" .
+                "document.getElementById('pname').setAttribute(\"href\", \"student.php\");" .
+                "</script>";
+            break;
+        case "Employee":
+            echo "<script>" .
+                "document.getElementById('pname').setAttribute(\"href\", \"employee.php\");" .
+                "</script>";
+            break;   
+        case "Admin":
+            echo "<script>" .
+                "document.getElementById('pname').setAttribute(\"href\", \"admin.php\");" .
+                "</script>";
+            break;
+        }
 }
     ?>

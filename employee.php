@@ -23,7 +23,7 @@
             <li id="headertabc"><a href="add-courses.php">Enter courses for current semester</a></li>
             <li id="headertabm"><a href="enter-grades.php">Enter marks</a></li>
             <li id="headertabs"><a href="courses.php">See your courses for current semester</a></li>
-            
+            <li id="headertabv"><a href="view-supplementary.php">View Supplementary examinations</a></li>            
         </ul>
     </nav>
 </div>

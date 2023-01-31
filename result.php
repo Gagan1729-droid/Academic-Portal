@@ -67,7 +67,7 @@ if($flag == 1){
     $branch = $details['branch'];
     $name = $details['name'];
     $spi = $details['spi_'.$semester];
-    $cpi = $details['cpi'];
+    $cpi = $details['cpi_'.$semester];
 
     echo "<script>" .
     "document.getElementById('regno').innerHTML += '$regno';" .
