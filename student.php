@@ -25,18 +25,12 @@
 <div class="container">
 <h2><?php echo strtoupper($program)?></h2>
 <h2>Current Semester: <?php echo $semester ?></h2>
-<h2>Status: <?php if ($flag == 1)
-    echo "Result not declared"; 
-    else if ($row['cpi'] > 4)
-    echo "Pass";
-else
-    echo "Fail"; ?> </h2>
     <nav>
         <ul>
+            <li id="headertabv"><a href="result.php">View Result</a></li>  
             <li id="headertabs"><a href="transcript.php">Get Transcript</a></li>
             <li id="headertabf"><a href="previous-semester.php">Previous semester performance</a></li>
-            <li id="headertaba"><a href="get-courses.php">See courses for current semester</a></li>
-            
+            <li id="headertaba"><a href="get-courses.php">See courses for current semester</a></li>          
         </ul>
     </nav>
 </div>

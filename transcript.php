@@ -4,6 +4,7 @@
     h1 {
         color: black;
         text-align:center;
+        font-size: 25px;
     }
     fieldset {
         margin: 20px;
@@ -52,8 +53,10 @@ $branch = $details['branch'];
 
 if($flag == 1){
     $cpi = $details['cpi'];
+    $status = ($cpi > 4) ? "Passed" : "Fail";
     echo "<script>" .
-        "document.getElementsByTagName('body')[0].innerHTML += '<br><h1>CPI: $cpi</h1>';" .
+        "document.getElementsByTagName('body')[0].innerHTML += '<br><h1>CPI: $cpi (From 1 to $semester semester)</h1>" .
+        "<h1>Status: $status till $semester semester</h1>'" .
         "</script>";
 }
 
