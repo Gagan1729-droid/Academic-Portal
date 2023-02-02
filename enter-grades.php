@@ -7,7 +7,7 @@ $empno = $_SESSION['sessionUser'];?>
 <?php
 $result = mysqli_query($conn, "SELECT * FROM employee WHERE empno = $empno");
 $row = mysqli_fetch_assoc($result);
-$sem = $row['semester'];
+$sem = mysqli_fetch_assoc(mysqli_query($conn, "SELECT * FROM admin ORDER BY semester DESC LIMIT 1 "))['semester'];
 $courses = [];
 if ($row['courses_'.$sem] != NULL) {
     $courses = preg_split('/\,/', $row['courses_'.$sem]);
@@ -17,6 +17,7 @@ if ($row['courses_'.$sem] != NULL) {
         $x = mysqli_fetch_assoc(mysqli_query($conn, "SELECT * FROM courses WHERE id = $id"));
         $course = $x['course'];
         $branch = $x['branch'];
+        $p = $x['program'];
         $maxmid = $x['midsem'];
         $maxend = $x['endsem'];
         $maxta = $x['ta'];
@@ -30,11 +31,8 @@ if ($row['courses_'.$sem] != NULL) {
             "     <h4>".strtoupper($type)."</h4>" .
             "</fieldset>'" .
             "</script>";
-        $programs = ['btech', 'mtech', 'mca'];
-        foreach($programs as $p){
             echo "<script>" .
                 "document.getElementById('$id').innerHTML += ' " .
-                "    <fieldset>" .
                 "    <legend>" . strtoupper($p) . "</legend>" .
                 "    <table id=\"" . $p . "_$id\">" .
                 "        <tr>" .
@@ -45,8 +43,7 @@ if ($row['courses_'.$sem] != NULL) {
                 "            <td>TA ($maxta)</td>" .
                 "        </tr>" .
                 "    </table>" .
-                "    <button onclick=\"save_marks(\'" . $p . "_$id\')\">Save</button>" .
-                "    </fieldset>' " .
+                "    <button onclick=\"save_marks(\'" . $p . "_$id\')\">Save</button>'" .
                 "</script>";
 
             $table1 = "academics_" . $p . "_2020";
@@ -76,8 +73,6 @@ if ($row['courses_'.$sem] != NULL) {
                     "<td><input type=\"number\" class=\"marks_".$p."_" . $id . "_ta\" value=\"$ta\"></td></tr>'" .
                     "</script>";
             }           
-
-        }
         if($type == "practical"){
             echo "<script>" .
                 "var x = document.getElementsByClassName('mid_$id');" .

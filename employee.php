@@ -35,6 +35,9 @@
     if(<?php echo $row2['grade_entry'] ?> == 0){
         document.getElementById("headertabm").style.display = 'none';
     }
+    if(<?php echo $row2['display_results']?> == 0){
+        document.getElementById("headertabv").style.display = "none";
+    }
 </script>
 
 <?php

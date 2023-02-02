@@ -9,9 +9,7 @@
     $res = mysqli_fetch_assoc(mysqli_query($conn, "SELECT * FROM admin ORDER BY semester DESC LIMIT 1 "));
     $semester = $res['semester'];
     $flag = 0;
-    if($res['display_results'] == 0 && $semester == 1){
-        $flag = 1;
-    }
+    
     $table1 = "academics_" . $program . "_2020";
     $table2 = "student_" . $program . "_2020";
     $query = "SELECT * FROM $table1 INNER JOIN $table2 ON $table1.regno = $table2.regno AND $table1.regno = $regno";
@@ -37,5 +35,11 @@
 
 
 <?php
+    if($res['display_results'] == 0){
+        $flag = 1;
+        echo "<script>" .
+            "document.getElementById('headertabv').style.display = 'none';" .
+            "</script>";
+    }
     include 'includes/footer.php'
 ?>

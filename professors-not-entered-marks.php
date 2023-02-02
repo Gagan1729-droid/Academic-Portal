@@ -11,6 +11,7 @@ while($emp = mysqli_fetch_assoc($result)){
     $courses = $emp["courses_$semester"];
     $arr = preg_split('/\,/', $courses);
     $facflag = 0;
+    if($arr!=null)
     foreach($arr as $c){
         if ($c == '')
             break;
@@ -30,6 +31,7 @@ while($emp = mysqli_fetch_assoc($result)){
                 $regno = $student['regno'];
                 // echo "</br>$regno ";
                 $json = json_decode($student["marks_$semester"], true);
+                if($json!=null)
                 foreach ($json as $key => $mark) {
                     if (intval($key) != $courseid)
                         continue;

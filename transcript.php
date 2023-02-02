@@ -4,7 +4,8 @@
     h1 {
         color: black;
         text-align:center;
-        font-size: 25px;
+        font-size: 20px;
+        font-weight: normal;
     }
     fieldset {
         margin: 20px;
@@ -14,13 +15,15 @@
     table, th, td {
         border: 1px solid black;
         border-collapse: collapse;
+        margin: 20px auto 20px auto;
     }
     td,th {
         padding: 3px 20px 3px 20px;
         text-align: center;
     }
     th {
-        font-size: 20px;
+        font-size: 18px;
+        font-weight: normal;
     }
 </style>
 
@@ -61,22 +64,43 @@ if($flag == 1){
 }
 
 for ($i = 1; $i <= $semester && $flag==1; $i++){
-    addTable($i,$conn, $row, $details, $branch);
+    addTable($i,$conn, $details);
 }
 
-function addTable($semester, $conn, $row, $details, $branch){
+// Add Table for cpi per semester
+echo "<script>".
+        "document.getElementsByTagName('body')[0].innerHTML += '</br>".
+        "<table id=\"cpi_table\">".
+        "<tr>".
+        "<th>Semester</th>".
+        "<th>CPI</th>".
+        "</tr>".
+        "</table>'".
+        "</script>";
+
+for($i = 1; $i <= $semester && $flag == 1; $i++){
+    addTableCpi($i,$conn, $details);
+}
+
+echo "<script>" .
+    "document.getElementsByTagName('body')[0].innerHTML += '</br>" .
+    "Date of generation: " . date('F') . " " . date('d') . ", " . date('Y').
+    "'</script>";
+
+function addTable($semester, $conn, $details){
     echo "<script>" .
     "document.getElementsByTagName('body')[0].innerHTML +='" .
-    "<fieldset>" .
-    "<legend>Semester-$semester</legend>".
-    "<table id=\"sem_$semester\">" .
+        "<table id=\"sem_$semester\">" .
     "    <tr>" .
+    "    <th colspan=\"4\">Semester-$semester</th>" .
+    "    </tr>" .
+    "    <tr>" .
+    "        <td>Course Id</td>" .
     "        <td>Course</td>" .
     "        <td>Credits</td>" .
     "        <td>Grade</td>" .
     "    </tr>" .
-    "</table>" .
-    "</fieldset>'" .
+    "</table>'" .
     "</script>";
 
     $json = json_decode($details["marks_$semester"], true);
@@ -88,6 +112,7 @@ function addTable($semester, $conn, $row, $details, $branch){
         echo "<script>" .
             "document.getElementById('sem_$semester').innerHTML += '" .
             "<tr>" .
+            "<td>$key</td>" .
             "<td>$co</td>" .
             "<td>$cr</td>" .
             "<td>$grade</td>" .
@@ -98,8 +123,19 @@ function addTable($semester, $conn, $row, $details, $branch){
     echo "<script>" .
         "document.getElementById('sem_$semester').innerHTML += '" .
         "<tr>" .
-        "<th colspan=\"3\">SPI: $spi</th>" .
+        "<th colspan=\"4\">SPI: $spi</th>" .
         "</tr>'" .
+        "</script>";
+}
+
+function addTableCpi($semester, $conn, $details){
+    $cpi = $details['cpi_'.$semester];
+    echo "<script>".
+        "document.getElementById('cpi_table').innerHTML += '".
+        "<tr>".
+        "<td>$semester</td>".
+        "<td>$cpi</td>".
+        "</tr>'".
         "</script>";
 }
 

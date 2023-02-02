@@ -9,7 +9,7 @@ $table = "employee";
 $query = "SELECT * FROM $table WHERE empno = " . $empno;
 $result = mysqli_query($conn, $query);
 $row = mysqli_fetch_assoc($result);
-$semester = $row['semester'];
+$semester = mysqli_fetch_assoc(mysqli_query($conn, "SELECT * FROM admin ORDER BY semester DESC LIMIT 1 "))['semester'];
 if ($row['courses_'.$semester] != NULL) {
     $courses = preg_split('/\,/', $row['courses_'.$semester]);
     $i = 1;
