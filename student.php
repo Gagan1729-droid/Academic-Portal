@@ -4,7 +4,14 @@
         header('Location: index.php');
         exit();
     }
+    if($_SESSION['category']!='Student'){
+        header('Location: index.php');
+        exit();
+    }
     $regno = $_SESSION['sessionUser'];
+    if($_GET['regno']!=$regno){
+        header('Location: student.php?regno='.$regno);
+    }
     $program = $_SESSION['program'];
     $res = mysqli_fetch_assoc(mysqli_query($conn, "SELECT * FROM admin ORDER BY semester DESC LIMIT 1 "));
     $semester = $res['semester'];
@@ -13,12 +20,12 @@
     $table1 = "academics_" . $program . "_2020";
     $table2 = "student_" . $program . "_2020";
     $query = "SELECT * FROM $table1 INNER JOIN $table2 ON $table1.regno = $table2.regno AND $table1.regno = $regno";
-    $result = mysqli_query($conn, $query);;
+    $result = mysqli_query($conn, $query);
     $row = mysqli_fetch_assoc(mysqli_query($conn, $query));
     $name = $row['name'];
 ?>
 
-
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
 <link rel = "stylesheet" type="text/css" href="student-style.css">
 <div class="container">
 <h2><?php echo strtoupper($program)?></h2>
@@ -28,7 +35,7 @@
             <li id="headertabv"><a href="result.php">View Result</a></li>  
             <li id="headertabs"><a href="transcript.php">Get Transcript</a></li>
             <li id="headertabf"><a href="previous-semester.php">Previous semester performance</a></li>
-            <li id="headertaba"><a href="get-courses.php">See courses for current semester</a></li>          
+            <li id="headertaba"><a href="get-courses.php">See courses for current semester</a></li>
         </ul>
     </nav>
 </div>

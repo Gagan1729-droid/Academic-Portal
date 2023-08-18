@@ -3,7 +3,16 @@
 if(!isset($_SESSION['loggedIn'])){
     header("Location: index.php");
     exit();
-} ?>
+}
+if($_SESSION['category']!='Student'){
+    header('Location: index.php');
+    exit();
+}
+$regno = $_SESSION['sessionUser'];
+if($_GET['regno']!=$regno){
+    header('Location: result.php?regno='.$regno);
+}
+ ?>
 
 
 <h2>Result</h2>

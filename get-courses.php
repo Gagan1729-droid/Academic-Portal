@@ -1,4 +1,17 @@
-<?php include 'includes/header.php' ?>
+<?php include 'includes/header.php';
+if(!isset($_SESSION['sessionUser'])){
+    header('Location: index.php');
+    exit();
+}
+if($_SESSION['category']!='Student'){
+    header('Location: index.php');
+    exit();
+}
+$regno = $_SESSION['sessionUser'];
+if($_GET['regno']!=$regno){
+    header('Location: get-courses.php?regno='.$regno);
+}
+?>
 
 <fieldset>
     <legend>Current Courses</legend>

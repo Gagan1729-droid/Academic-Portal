@@ -1,4 +1,14 @@
-<?php include 'includes/header.php';?>
+<?php include 'includes/header.php';
+if(!isset($_SESSION['loggedIn'])){
+    header('Location: index.php');
+    exit();
+}
+// To make sure that this is only accessible to admin
+if($_SESSION['category'] != 'Admin'){
+    header('Location: index.php');
+    exit();
+}
+?>
 
 <h2 style="color: black">Professors along with the students whose marks have yet not been entered</h2>
 
@@ -97,27 +107,6 @@ function addTablestudent($empno, $courseid, $p, $regno, $stname){
         "</tr>';" .
         "</script>";
 }
-
-
-
-
-// $programs = ['btech', 'mtech', 'mca'];
-// foreach(['btech'] as $p) {
-//     $table = "academics_" . $p . "_2020";
-//     $query = "SELECT * FROM $table";
-//     $results = mysqli_query($conn, $query);
-//     while ($row = mysqli_fetch_assoc($results)) {
-//         $regno = $row['regno'];
-//         $json = json_decode($row["marks_$semester"], true);
-//         foreach ($json as $key => $mark) {
-//             $type = mysqli_fetch_assoc(mysqli_query($conn, "SELECT * FROM courses WHERE id = " . intval($key)));
-//             $status = getStatus($mark, $type);
-//             if($status == 1){
-
-//             }
-//         }
-//     }
-// }
 
 function getStatus($marks, $type){
     $arr = preg_split('/\,/', $marks);

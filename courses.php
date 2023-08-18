@@ -1,4 +1,19 @@
-<?php include 'includes/header.php';?>
+<?php include 'includes/header.php';
+if(!isset($_SESSION['sessionUser'])){
+    header('Location: index.php');
+    exit();
+}
+if($_SESSION['category']!='Employee'){
+    header('Location: index.php');
+    exit();
+}
+
+$empno = $_SESSION['sessionUser'];
+if($_GET['empno']!=$empno){
+    header('Location: courses.php?empno=' . $empno);
+}
+
+?>
 
 <legend style="text-align: center; margin-top: 30px; font-weight: bold;">Current Courses</legend></br>
 <table id="course_table">

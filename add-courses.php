@@ -1,6 +1,19 @@
 <?php 
 include 'includes/header.php';
+if(!isset($_SESSION['sessionUser'])){
+    header('Location: index.php');
+    exit();
+}
+if($_SESSION['category']!='Employee'){
+    header('Location: index.php');
+    exit();
+}
+
 $empno = $_SESSION['sessionUser'];
+if($_GET['empno']!=$empno){
+    header('Location: add-courses.php?empno=' . $empno);
+}
+
 $_SESSION['conn'] = $conn;
 $table = "employee";
 $query = "SELECT * FROM $table WHERE empno = " . $empno;

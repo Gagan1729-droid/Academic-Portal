@@ -1,5 +1,17 @@
 <?php include 'includes/header.php';
-$empno = $_SESSION['sessionUser'];?>
+if(!isset($_SESSION['sessionUser'])){
+    header('Location: index.php');
+    exit();
+}
+if($_SESSION['category']!='Employee'){
+    header('Location: index.php');
+    exit();
+}
+
+$empno = $_SESSION['sessionUser'];
+if($_GET['empno']!=$empno){
+    header('Location: enter-grades.php?empno=' . $empno);
+}?>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
 <h2>Marks Entry</h2>
@@ -28,7 +40,7 @@ if ($row['courses_'.$sem] != NULL) {
             "document.getElementsByTagName('body')[0].innerHTML +=' " .
             "<fieldset id=\"$id\">" .
             "    <legend>".$course.": ".strtoupper($branch)."</legend>" .
-            "     <h4>".strtoupper($type)."</h4>" .
+            "     <h4>$id : ".strtoupper($type)."</h4>" .
             "</fieldset>'" .
             "</script>";
             echo "<script>" .

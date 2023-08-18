@@ -1,4 +1,18 @@
-<?php include 'includes/header.php'?>
+<?php include 'includes/header.php';
+if(!isset($_SESSION['sessionUser'])){
+    header('Location: index.php');
+    exit();
+}
+if($_SESSION['category']!='Employee'){
+    header('Location: index.php');
+    exit();
+}
+
+$empno = $_SESSION['sessionUser'];
+if($_GET['empno']!=$empno){
+    header('Location: view-supplementary.php?empno=' . $empno);
+}
+?>
 
 <h2>Supplementary Students</h2>
 

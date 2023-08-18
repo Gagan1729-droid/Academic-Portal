@@ -1,5 +1,14 @@
 <?php include 'database.php';
 session_start();
+if(!isset($_SESSION['loggedIn'])){
+    header('Location: ../index.php');
+    exit();
+}
+// To make sure that this is only accessible to admin
+if($_SESSION['category'] != 'Admin'){
+    header('Location: ../index.php');
+    exit();
+}
 
 $attribute = $_POST['attribute'];
 $value = $_POST['value'];

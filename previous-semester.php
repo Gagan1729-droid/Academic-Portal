@@ -1,5 +1,18 @@
 <?php include 'includes/header.php';
 
+if(!isset($_SESSION['sessionUser'])){
+    header('Location: index.php');
+    exit();
+}
+if($_SESSION['category']!='Student'){
+    header('Location: index.php');
+    exit();
+}
+$regno = $_SESSION['sessionUser'];
+if($_GET['regno']!=$regno){
+    header('Location: previous-semester.php?regno='.$regno);
+}
+
 $query = "SELECT * FROM admin ORDER BY semester DESC LIMIT 1 ";
 $result = mysqli_query($conn, $query);
 $row = mysqli_fetch_assoc($result);

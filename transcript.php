@@ -1,4 +1,17 @@
-<?php include 'includes/header.php';?>
+<?php include 'includes/header.php';
+if(!isset($_SESSION['sessionUser'])){
+    header('Location: index.php');
+    exit();
+}
+if($_SESSION['category']!='Student'){
+    header('Location: index.php');
+    exit();
+}
+$regno = $_SESSION['sessionUser'];
+if($_GET['regno']!=$regno){
+    header('Location: transcript.php?regno='.$regno);
+}
+?>
 
 <style>
     h1 {
@@ -68,6 +81,7 @@ for ($i = 1; $i <= $semester && $flag==1; $i++){
 }
 
 // Add Table for cpi per semester
+if($flag==1)
 echo "<script>".
         "document.getElementsByTagName('body')[0].innerHTML += '</br>".
         "<table id=\"cpi_table\">".
@@ -82,6 +96,7 @@ for($i = 1; $i <= $semester && $flag == 1; $i++){
     addTableCpi($i,$conn, $details);
 }
 
+if($flag==1)
 echo "<script>" .
     "document.getElementsByTagName('body')[0].innerHTML += '</br>" .
     "Date of generation: " . date('F') . " " . date('d') . ", " . date('Y').

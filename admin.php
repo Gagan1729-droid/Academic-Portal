@@ -4,6 +4,11 @@
         header('Location: index.php');
         exit();
     }
+    // To make sure that this is only accessible to admin
+    if($_SESSION['category'] != 'Admin'){
+        header('Location: index.php');
+        exit();
+    }
     $table = "admin";
     $query = "SELECT * FROM $table ORDER BY semester DESC LIMIT 1 ";
     $result = mysqli_query($conn, $query);

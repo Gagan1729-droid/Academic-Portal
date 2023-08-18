@@ -4,7 +4,15 @@
         header('Location: index.php');
         exit();
     }
+    if($_SESSION['category']!='Employee'){
+        header('Location: index.php');
+        exit();
+    }
+    
     $empno = $_SESSION['sessionUser'];
+    if($_GET['empno']!=$empno){
+        header('Location: employee.php?empno=' . $empno);
+    }
     $table = "employee";
     $query = "SELECT * FROM $table WHERE empno = " . $empno;
     $result = mysqli_query($conn, $query);
